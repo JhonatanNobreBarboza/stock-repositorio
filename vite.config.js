@@ -6,6 +6,6 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    base: '/'
+    base: '/' // Caminhos relativos à raiz
   }
 });
