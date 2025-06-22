@@ -10,8 +10,9 @@
            "use": "@vercel/static"
          },
          {
-           "src": "src/main.js",
-           "use": "@vercel/vue"
+           "src": "package.json",
+           "use": "@vercel/static-build",
+           "config": { "distDir": "dist" }
          }
        ],
        "routes": [
