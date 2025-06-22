@@ -30,9 +30,9 @@ import { Pool } from 'pg';
        try {
          const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
          const user = result.rows[0];
-         console.log('Usuário encontrado:', user); // Adiciona log para depuração
+         console.log('Usuário encontrado:', user);
          if (!user || !(await bcrypt.compare(password, user.password))) {
-           console.log('Falha na autenticação:', username, password); // Log de falha
+           console.log('Falha na autenticação:', username, password);
            return res.status(401).json({ error: 'Credenciais inválidas' });
          }
 
