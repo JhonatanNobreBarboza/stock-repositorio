@@ -6,12 +6,12 @@
         <div class="form-group">
           <label for="username" class="form-label">Usuário</label>
           <input v-model="username" type="text" id="username" class="form-input" placeholder="Digite seu usuário"
-            required />
+            required autocomplete="username" />
         </div>
         <div class="form-group">
           <label for="password" class="form-label">Senha</label>
           <input v-model="password" type="password" id="password" class="form-input" placeholder="Digite sua senha"
-            required />
+            required autocomplete="current-password" />
         </div>
         <button type="submit" class="login-button">Entrar</button>
       </form>
