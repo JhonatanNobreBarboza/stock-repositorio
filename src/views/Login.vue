@@ -41,7 +41,7 @@ export default {
         localStorage.setItem('token', response.data.token);
         this.$router.push('/dashboard');
       } catch (err) {
-        this.error = 'Credenciais inválidas';
+        this.error = err.response?.data?.error || 'Erro no login';
       }
     },
   },
