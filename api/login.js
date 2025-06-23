@@ -12,7 +12,12 @@ import { Pool } from 'pg';
        ssl: { rejectUnauthorized: false },
      });
 
-     const corsMiddleware = cors({ origin: '*' });
+     // Configuração CORS para permitir origens específicas
+     const corsOptions = {
+       origin: [process.env.NODE_ENV === 'development' ? 'http://localhost:5173' : 'https://stock-repositorio.vercel.app'],
+       optionsSuccessStatus: 200 // Para navegadores antigos
+     };
+     const corsMiddleware = cors(corsOptions);
 
      export default async function handler(req, res) {
        console.log('Requisição recebida em /api/login:', req.method, req.url);
