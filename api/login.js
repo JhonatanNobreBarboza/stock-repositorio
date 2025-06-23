@@ -15,31 +15,37 @@ import { Pool } from 'pg';
      const corsMiddleware = cors({ origin: '*' });
 
      export default async function handler(req, res) {
+       console.log('Requisição recebida em /api/login:', req.method, req.url);
        await new Promise((resolve) => corsMiddleware(req, res, resolve));
 
        if (req.method !== 'POST') {
+         console.log('Método não permitido:', req.method);
          return res.status(405).json({ error: 'Método não permitido' });
        }
 
        const { username, password } = req.body;
+       console.log('Dados recebidos:', { username, password });
 
        if (!username || !password) {
+         console.log('Dados inválidos:', { username, password });
          return res.status(400).json({ error: 'Usuário e senha são obrigatórios' });
        }
 
        try {
+         console.log('Consultando banco para:', username);
          const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
          const user = result.rows[0];
-         console.log('Usuário encontrado:', user);
+         console.log('Resultado da consulta:', user);
          if (!user || !(await bcrypt.compare(password, user.password))) {
-           console.log('Falha na autenticação:', username, password);
+           console.log('Falha na autenticação:', { username, password }, 'User:', user);
            return res.status(401).json({ error: 'Credenciais inválidas' });
          }
 
          const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+         console.log('Login bem-sucedido, token gerado:', token);
          res.status(200).json({ token });
        } catch (err) {
-         console.error('Erro no login:', err);
+         console.error('Erro no servidor:', err.stack);
          res.status(500).json({ error: 'Erro no servidor' });
        }
      }

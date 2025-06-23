@@ -37,11 +37,11 @@ export default {
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/login`, {
           username: this.username,
           password: this.password,
-        })
-        localStorage.setItem('token', response.data.token)
-        this.$router.push('/dashboard')
+        });
+        localStorage.setItem('token', response.data.token);
+        this.$router.push('/dashboard');
       } catch (err) {
-        this.error = 'Credenciais inválidas'
+        this.error = 'Credenciais inválidas';
       }
     },
   },
